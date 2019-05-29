@@ -1,9 +1,13 @@
 ## Export prometheus metrics with zero dependencies
 
+```
+npm install --save prometheus-metrics
+```
+
 If you don't need labels you can simply use `Prometheus.fromTuples()` method:
 ```js
 const http = require('http')
-const { Prometheus, MetricContentType } = require('./index');
+const { Prometheus, MetricContentType } = require('prometheus-metrics');
 
 http.createServer((req, res) => {
     if (req.url === '/metrics') {
@@ -12,8 +16,7 @@ http.createServer((req, res) => {
             'myapp_',
             [
                 [ 0, 'metric01', 'This is my metric', Math.floor(10000 * Math.random()) ], // tuple that defines metric
-            ],
-            true
+            ]
         ).then(p => {
             // set proper Content-Type header
             res.setHeader('Content-Type', MetricContentType);
@@ -30,8 +33,7 @@ http.createServer((req, res) => {
 Or you can instantiate `Prometheus` class and use `add()` method instead:
 ```js
 const http = require('http')
-const { Prometheus, MetricContentType } = require('./index');
-const { SystemMetrics } = require('./system');
+const { Prometheus, MetricContentType, SystemMetrics } = require('prometheus-metrics');
 
 const p = new Prometheus('myapp_');
 
